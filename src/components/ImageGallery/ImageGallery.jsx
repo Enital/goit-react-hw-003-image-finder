@@ -30,11 +30,11 @@ class ImageGallery extends React.Component {
         const { selectedImage } = this.state;
         return (
             <div>
-                <ul className={css.ImageGallery}>
+                <ul className={css.imageGallery}>
                     {images &&
                         images.map(image => {
                             return (
-                                <li key={image.id} className={css.ImageGalleryItem}>
+                                <li key={image.id} className={css.imageGalleryItem}>
                                     
                                     <div onClick={() => this.handleImageClick(image)}>
                                         <ImageGalleryItem oneImage={image}></ImageGalleryItem>
