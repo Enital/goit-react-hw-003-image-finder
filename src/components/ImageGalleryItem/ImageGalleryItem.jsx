@@ -1,12 +1,14 @@
 import css from './imageGalleryItem.module.css';
 
-function ImageGalleryItem({ oneImage }) {
+function ImageGalleryItem({ data }) {
     return (
-        <img
-            className={css.imageGalleryItemImage}
-            src={oneImage.webformatURL}
-            alt={oneImage.tags}
-        ></img>
+        <li className={css.imageGalleryItem}> 
+            <img
+                className={css.imageGalleryItemImage}
+                src={data.webformatURL}
+                alt={data.tags}>
+            </img>
+        </li>
     );
 }
 

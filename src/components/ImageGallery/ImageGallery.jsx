@@ -33,10 +33,8 @@ class ImageGallery extends React.Component {
                 <ul className={css.imageGallery}>
                     {images &&
                         images.map(image => {
-                            return (
-                                <li key={image.id} className={css.imageGalleryItem} onClick={() => this.handleImageClick(image)}>                                    
-                                    <ImageGalleryItem oneImage={image}></ImageGalleryItem>
-                                </li>
+                            return (                             
+                                <ImageGalleryItem key={image.id} data={image} onClick={() => this.handleImageClick(image)}></ImageGalleryItem>
                             );
                         })}
                 </ul>
