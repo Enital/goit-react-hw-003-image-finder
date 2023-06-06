@@ -10,7 +10,7 @@ html {
     box-sizing: inherit;
 }
 
-button {
+/* button {
     text-decoration: none;
     display: inline-block;
 
@@ -30,4 +30,4 @@ button:hover {
 }
 ul {
     list-style: none;
-}
+} */

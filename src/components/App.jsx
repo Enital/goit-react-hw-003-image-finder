@@ -4,10 +4,10 @@ import ImageGallery from './ImageGallery/ImageGallery';
 import SearchBar from './SearchBar/SearchBar';
 import LoadMoreButton from './LoadMoreButton/LoadMoreButton';
 
-// import './app.module.css';
-
+import './app.module.css';
+const KEY = '35660997-4fd052661528ba3040eb8e5ad';
 const BASEURL =
-  'https://pixabay.com/api/?key=35462061-8a52d4784631467a148110ba5&q=';
+  `https://pixabay.com/api/?key=${KEY}&q=`;
 
 class App extends React.Component {
   state = {

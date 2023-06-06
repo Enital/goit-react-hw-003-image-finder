@@ -3,7 +3,7 @@ import css from './imageGalleryItem.module.css';
 function ImageGalleryItem({ oneImage }) {
     return (
         <img
-            className={css.ImageGalleryItem__image}
+            className={css.imageGalleryItemImage}
             src={oneImage.webformatURL}
             alt={oneImage.tags}
         ></img>
