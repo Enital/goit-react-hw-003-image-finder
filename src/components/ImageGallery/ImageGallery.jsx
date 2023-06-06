@@ -29,16 +29,13 @@ class ImageGallery extends React.Component {
         const { images, load } = this.props;
         const { selectedImage } = this.state;
         return (
-            <div>
+            <>
                 <ul className={css.imageGallery}>
                     {images &&
                         images.map(image => {
                             return (
-                                <li key={image.id} className={css.imageGalleryItem}>
-                                    
-                                    <div onClick={() => this.handleImageClick(image)}>
-                                        <ImageGalleryItem oneImage={image}></ImageGalleryItem>
-                                    </div>
+                                <li key={image.id} className={css.imageGalleryItem} onClick={() => this.handleImageClick(image)}>                                    
+                                    <ImageGalleryItem oneImage={image}></ImageGalleryItem>
                                 </li>
                             );
                         })}
@@ -47,7 +44,7 @@ class ImageGallery extends React.Component {
                     <Modal image={selectedImage} onClose={this.handleModalClose}></Modal>
                 )}
                 {load && <Loader />}
-            </div>
+            </>
         );
     }
 }
