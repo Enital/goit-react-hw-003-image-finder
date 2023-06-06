@@ -4,7 +4,8 @@ import ImageGallery from './ImageGallery/ImageGallery';
 import SearchBar from './SearchBar/SearchBar';
 import LoadMoreButton from './LoadMoreButton/LoadMoreButton';
 
-import './app.module.css';
+import css from './app.module.css';
+
 const KEY = '35660997-4fd052661528ba3040eb8e5ad';
 const BASEURL =
   `https://pixabay.com/api/?key=${KEY}&q=`;
@@ -93,7 +94,7 @@ class App extends React.Component {
     return (
       <div>
         <SearchBar onFormSubmit={this.handleFormSubmit}></SearchBar>
-        <main>
+        <main className={css.app}>
           <ImageGallery
             load={load}
             images={images}
