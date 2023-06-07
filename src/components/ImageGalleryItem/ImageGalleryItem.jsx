@@ -2,9 +2,9 @@ import css from './imageGalleryItem.module.css';
 
 function ImageGalleryItem({ data }) {
     return (
-        <li className={css.imageGalleryItem}> 
+        <li className={css.item}> 
             <img
-                className={css.imageGalleryItemImage}
+                className={css.image}
                 src={data.webformatURL}
                 alt={data.tags}>
             </img>

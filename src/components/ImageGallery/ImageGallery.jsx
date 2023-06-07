@@ -30,7 +30,7 @@ class ImageGallery extends React.Component {
         const { selectedImage } = this.state;
         return (
             <>
-                <ul className={css.imageGallery}>
+                <ul className={css.gallery}>
                     {images &&
                         images.map(image => {
                             return (                             

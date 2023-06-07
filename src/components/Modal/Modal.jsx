@@ -27,18 +27,18 @@ class Modal extends React.Component {
         }
     };
     
-    handleBackdrop = event => {
-        if (event.target === event.currentTarget) {
-            this.props.onClose();
-        }
-    }
+    // handleBackdrop = event => {
+    //     if (event.target === event.currentTarget) {
+    //         this.props.onClose();
+    //     }
+    // }
     
     render() {
         return (
             this.state.showModal && (
-                <div className={css.overlay} onClick={this.handleBackdrop}>
+                <div className={css.overlay} onClick={this.props.onClose}>
                     <div className={css.modal}>
-                        <img src={this.props.image.largeImageURL} alt="" width={'100%'} />
+                        <img src={this.props.image.largeImageURL} alt="" width={'80%'} />
                     </div>
                 </div>
             )
