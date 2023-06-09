@@ -7,6 +7,5 @@ export async function api(query, page) {
     const { data } = await axios.get(
             `${BASEURL}${query.trim()}&image_type=photo&pretty=true&orientation=horizontal&safesearch=true&webformatURL=180&per_page=12&page=${page}`
         );
-    console.log(data);
     return data;
 }
