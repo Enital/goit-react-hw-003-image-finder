@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import css from './modal.module.css';
 
 export default class Modal extends React.Component {
@@ -6,11 +8,12 @@ export default class Modal extends React.Component {
     showModal: true,
   };
 
-  toggleModal = () => {
-    this.setState(({ showModal }) => ({
-      showModal: !showModal,
-    }));
-  };
+  // toggleModal = () => {
+  //   this.setState(({ showModal }) => ({
+  //     showModal: !showModal,
+  //   }));
+  // };
+
   componentDidMount() {
     document.addEventListener('keydown', this.handleKeyDown);
   }
@@ -21,26 +24,30 @@ export default class Modal extends React.Component {
 
   handleKeyDown = event => {
     if (event.key === 'Escape' && this.state.showModal===true) {
-      this.toggleModal();
+      this.props.onClose();
     }
   };
 
   handleBackdropClick = (event) => {
     if (event.target === event.currentTarget) {
-      this.toggleModal();
+      // this.toggleModal();
+      this.props.onClose();
     }
   };
 
   render() {
 
     return (
-      this.state.showModal && (
-        <div className={css.overlay} onClick={this.handleBackdropClick}>
-          <div className={css.modal}>
-            <img src={this.props.image.largeImageURL} alt="" width={'90%'} />
-          </div>
+      <div className={css.overlay} onClick={this.handleBackdropClick}>
+        <div className={css.modal}>
+        <img src={this.props.image.largeImageURL} alt=""/>
         </div>
-      )
+      </div>
     );
   }
 }
+
+Modal.types = {
+  image: PropTypes.object.isRequired,
+  onModalClose: PropTypes.func.isRequired,
+};
