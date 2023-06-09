@@ -21,19 +21,20 @@ class App extends Component {
   // componentDidMount() {}
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.searchQuery !== this.state.searchQuery) {
+    if (prevState.query !== this.state.query) {
       this.setState({ images: null });
-      this.fetchRequests(this.state.searchQuery);
+      this.getApiData();
     } else {
       return false;
     }
   }
 
-  async fetchRequests(searchQuery) {
+  async getApiData() {
+    const {query}= this.state;
     this.setState({ load: true });
     try {
       const response = await axios.get(
-        `${BASEURL}${searchQuery.trim()}&image_type=photo&pretty=true&orientation=horizontal&safesearch=true&webformatURL=180&per_page=12&page=${
+        `${BASEURL}${query.trim()}&image_type=photo&pretty=true&orientation=horizontal&safesearch=true&webformatURL=180&per_page=12&page=${
           this.state.page
         }`
       );
@@ -58,7 +59,7 @@ class App extends Component {
   }
 
   handleInputChange = value => {
-    this.setState({ searchQuery: value });
+    this.setState({ query: value });
   };
 
   nextPage = async () => {
@@ -66,7 +67,7 @@ class App extends Component {
 
     try {
       const response = await axios.get(
-        `${BASEURL}${this.state.searchQuery.trim()}&image_type=photo&pretty=true&orientation=horizontal&safesearch=true&webformatURL=180&per_page=12&page=${
+        `${BASEURL}${this.state.query.trim()}&image_type=photo&pretty=true&orientation=horizontal&safesearch=true&webformatURL=180&per_page=12&page=${
           this.state.page + 1
         }`
       );
@@ -87,7 +88,7 @@ class App extends Component {
   };
 
   handleFormSubmit = value => {
-    value && this.setState({ searchQuery: value, page: 1 });
+    value && this.setState({ query: value, page: 1 });
   };
 
   render() {
