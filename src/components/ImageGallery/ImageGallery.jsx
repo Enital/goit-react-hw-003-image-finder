@@ -1,50 +1,100 @@
+// import React from 'react';
+// import ImageGalleryItem from 'components/ImageGalleryItem/ImageGalleryItem';
+// import Loader from 'components/Loader/Loader';
+// import Modal from '../Modal/Modal';
+
+// import css from './imageGallery.module.css';
+
+// class ImageGallery extends React.Component {
+//     state = {
+//         selectedImage: null,
+//     };
+    
+//     handleImageClick = image => {
+//         this.setState({ selectedImage: image });
+//         document.addEventListener('keydown', this.handleKeyDown);
+//     };
+
+//     componentDidUpdate(prevProps, prevState) {
+//         if (prevProps.searchQuery !== this.props.searchQuery) {
+//             this.setState({ load: true });
+//         }
+//     }
+
+//     handleModalClose = () => {
+//         this.setState({ selectedImage: null });
+//     };
+
+//     render() {
+//         const { images, load } = this.props;
+//         const { selectedImage } = this.state;
+//         return (
+//             <>
+//                 <ul className={css.gallery}>
+//                     {images &&
+//                         images.map(image => {
+//                             return (
+//                                 <ImageGalleryItem key={image.id} data={image} onClick={() => this.handleImageClick(image)}></ImageGalleryItem>
+//                             );
+//                         })}
+//                 </ul>
+//                 {selectedImage && (
+//                     <Modal image={selectedImage} onClose={this.handleModalClose}></Modal>
+//                 )}
+//                 {load && <Loader />}
+//             </>
+//         );
+//     }
+// }
+
+// export default ImageGallery;
+
+import { Component } from 'react';
 import React from 'react';
 import ImageGalleryItem from 'components/ImageGalleryItem/ImageGalleryItem';
 import Loader from 'components/Loader/Loader';
-import Modal from '../Modal/Modal';
-
 import css from './imageGallery.module.css';
-
-class ImageGallery extends React.Component {
-    state = {
-        selectedImage: null,
-    };
-    
-    handleImageClick = image => {
-        this.setState({ selectedImage: image });
-        document.addEventListener('keydown', this.handleKeyDown);
-    };
-
-    componentDidUpdate(prevProps, prevState) {
-        if (prevProps.searchQuery !== this.props.searchQuery) {
-            this.setState({ load: true });
-        }
+import Modal from '../Modal/Modal';
+class ImageGallery extends Component {
+  state = {
+    selectedImage: null,
+  };
+  handleImageClick = image => {
+    this.setState({ selectedImage: image });
+    document.addEventListener('keydown', this.handleKeyDown);
+  };
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.searchQuery !== this.props.searchQuery) {
+      this.setState({ load: true });
     }
-
-    handleModalClose = () => {
-        this.setState({ selectedImage: null });
-    };
-
-    render() {
-        const { images, load } = this.props;
-        const { selectedImage } = this.state;
-        return (
-            <>
-                <ul className={css.gallery}>
-                    {images &&
-                        images.map(image => {
-                            return (                             
-                                <ImageGalleryItem key={image.id} data={image} onClick={() => this.handleImageClick(image)}></ImageGalleryItem>
-                            );
-                        })}
-                </ul>
-                {selectedImage && (
-                    <Modal image={selectedImage} onClose={this.handleModalClose}></Modal>
-                )}
-                {load && <Loader />}
-            </>
-        );
-    }
+  }
+  handleModalClose = () => {
+    this.setState({ selectedImage: null });
+  };
+  render() {
+    const { images, load } = this.props;
+    const { selectedImage } = this.state;
+    return (
+      <div>
+        <ul className={css.ImageGallery}>
+          {images &&
+            images.map(image => {
+              return (
+                <li className={css.ImageGalleryItem} key={image.id}>
+                  <div onClick={() => this.handleImageClick(image)}>
+                    <ImageGalleryItem oneImage={image}></ImageGalleryItem>
+                  </div>
+                </li>
+              );
+            })}
+        </ul>
+        {selectedImage && (
+          <Modal image={selectedImage} onClose={this.handleModalClose}></Modal>
+        )}
+        {load && <Loader />}
+      </div>
+    );
+  }
 }
 
 export default ImageGallery;

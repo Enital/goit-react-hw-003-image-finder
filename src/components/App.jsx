@@ -1,23 +1,24 @@
+import { Component } from 'react';
 import React from 'react';
+import './app.module.css';
 import axios from 'axios';
 import ImageGallery from './ImageGallery/ImageGallery';
 import SearchBar from './SearchBar/SearchBar';
 import LoadMoreButton from './LoadMoreButton/LoadMoreButton';
 
-import css from './app.module.css';
-
 const KEY = '35660997-4fd052661528ba3040eb8e5ad';
-const BASEURL =
-  `https://pixabay.com/api/?key=${KEY}&q=`;
+const BASEURL = `https://pixabay.com/api/?key=${KEY}&q=`;
 
-class App extends React.Component {
+class App extends Component {
   state = {
     images: null,
-    searchQuery: '',
+    query: '',
     page: 1,
     load: false,
     howManyImagesFound: null,
   };
+
+  // componentDidMount() {}
 
   componentDidUpdate(prevProps, prevState) {
     if (prevState.searchQuery !== this.state.searchQuery) {
@@ -84,6 +85,7 @@ class App extends React.Component {
       });
     }
   };
+
   handleFormSubmit = value => {
     value && this.setState({ searchQuery: value, page: 1 });
   };
@@ -94,7 +96,7 @@ class App extends React.Component {
     return (
       <div>
         <SearchBar onFormSubmit={this.handleFormSubmit}></SearchBar>
-        <main className={css.app}>
+        <main>
           <ImageGallery
             load={load}
             images={images}
