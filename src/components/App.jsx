@@ -1,60 +1,48 @@
-import { Component } from 'react';
 import React from 'react';
-import './app.module.css';
-import axios from 'axios';
 import ImageGallery from './ImageGallery/ImageGallery';
 import SearchBar from './SearchBar/SearchBar';
 import LoadMoreButton from './LoadMoreButton/LoadMoreButton';
+import { api } from './Functions/api';
 
-const KEY = '35660997-4fd052661528ba3040eb8e5ad';
-const BASEURL = `https://pixabay.com/api/?key=${KEY}&q=`;
+import './app.module.css';
 
-class App extends Component {
+class App extends React.Component {
   state = {
-    images: null,
+    images: [],
     query: '',
     page: 1,
     load: false,
     howManyImagesFound: null,
   };
 
-  // componentDidMount() {}
-
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.query !== this.state.query) {
-      this.setState({ images: null });
+    const { query, page } = this.state;
+    if (prevState.query !== query || prevState.page !== page) {
+      // || prevState.page !== page
       this.getApiData();
-    } else {
-      return false;
     }
   }
 
   async getApiData() {
-    const {query}= this.state;
+    const {query, page }= this.state;
     this.setState({ load: true });
     try {
-      const response = await axios.get(
-        `${BASEURL}${query.trim()}&image_type=photo&pretty=true&orientation=horizontal&safesearch=true&webformatURL=180&per_page=12&page=${
-          this.state.page
-        }`
-      );
-      const newImages = response.data.hits;
+      const response = await api(query, page);
+      
+      const { hits: images, totalHits: total } = response;
 
-      if (response.data.hits.length === 0) {
+      if (images.length === 0) {
         alert('Nothing found =`(');
+        return;
       }
-      this.setState(prevState => ({
-        images: prevState.images
-          ? [...prevState.images, ...newImages]
-          : newImages,
-        howManyImagesFound: response.data.totalHits,
-      }));
+      
+      this.setState({ images: [...this.state.images, ...images],
+        howManyImagesFound: total,
+      });
     } catch (error) {
       console.error(error);
     } finally {
-      this.setState({
-        load: false,
-      });
+      this.setState({ load: false });
     }
   }
 
@@ -62,33 +50,12 @@ class App extends Component {
     this.setState({ query: value });
   };
 
-  nextPage = async () => {
-    this.setState(prevState => ({ load: true, page: prevState.page + 1 }));
-
-    try {
-      const response = await axios.get(
-        `${BASEURL}${this.state.query.trim()}&image_type=photo&pretty=true&orientation=horizontal&safesearch=true&webformatURL=180&per_page=12&page=${
-          this.state.page + 1
-        }`
-      );
-      const newImages = response.data.hits;
-      this.setState(prevState => ({
-        images: prevState.images
-          ? [...prevState.images, ...newImages]
-          : newImages,
-        howManyImagesFound: response.data.totalHits,
-      }));
-    } catch (error) {
-      console.error(error);
-    } finally {
-      this.setState({
-        load: false,
-      });
-    }
+  nextPage = () => {
+    this.setState(prevState => ({ page: prevState.page + 1 }));
   };
 
   handleFormSubmit = value => {
-    value && this.setState({ query: value, page: 1 });
+    value && this.setState({ images: [], query: value, page: 1 });
   };
 
   render() {
@@ -97,7 +64,6 @@ class App extends Component {
     return (
       <div>
         <SearchBar onFormSubmit={this.handleFormSubmit}></SearchBar>
-        <main>
           <ImageGallery
             load={load}
             images={images}
@@ -109,8 +75,7 @@ class App extends Component {
             <LoadMoreButton onClick={this.nextPage}></LoadMoreButton>
           ) : (
             ''
-          )}
-        </main>
+        )}
       </div>
     );
   }
