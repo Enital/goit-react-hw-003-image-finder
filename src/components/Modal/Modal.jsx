@@ -8,12 +8,6 @@ export default class Modal extends React.Component {
     showModal: true,
   };
 
-  // toggleModal = () => {
-  //   this.setState(({ showModal }) => ({
-  //     showModal: !showModal,
-  //   }));
-  // };
-
   componentDidMount() {
     document.addEventListener('keydown', this.handleKeyDown);
   }

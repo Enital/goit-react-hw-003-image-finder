@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import ImageGalleryItem from 'components/ImageGalleryItem/ImageGalleryItem';
 import Loader from 'components/Loader/Loader';
 import Modal from '../Modal/Modal';
@@ -50,3 +51,9 @@ class ImageGallery extends React.Component {
 }
 
 export default ImageGallery;
+
+ImageGallery.propTypes = {
+  load: PropTypes.bool.isRequired,
+  images: PropTypes.array.isRequired,
+  onClick: PropTypes.func.isRequired,
+}

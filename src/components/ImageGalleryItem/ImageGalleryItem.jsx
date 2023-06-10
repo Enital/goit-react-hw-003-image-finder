@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 import css from './imageGalleryItem.module.css';
 
 function ImageGalleryItem({ oneImage }) {
@@ -10,3 +12,7 @@ function ImageGalleryItem({ oneImage }) {
   );
 }
 export default ImageGalleryItem;
+
+ImageGalleryItem.propTypes = {
+  oneImage: PropTypes.object.isRequired,
+}
