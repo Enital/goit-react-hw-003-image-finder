@@ -12,13 +12,12 @@ class App extends React.Component {
     query: '',
     page: 1,
     load: false,
-    howManyImagesFound: null,
+    showMoreButton: false,
   };
 
   componentDidUpdate(prevProps, prevState) {
     const { query, page } = this.state;
     if (prevState.query !== query || prevState.page !== page) {
-      // || prevState.page !== page
       this.getApiData();
     }
   }
@@ -35,10 +34,9 @@ class App extends React.Component {
         alert('Nothing found =`(');
         return;
       }
-      
+      const showMoreButton = page < Math.ceil(total / 12);
       this.setState({ images: [...this.state.images, ...images],
-        howManyImagesFound: total,
-      });
+        showMoreButton });
     } catch (error) {
       console.error(error);
     } finally {
@@ -59,7 +57,7 @@ class App extends React.Component {
   };
 
   render() {
-    const { images, load } = this.state;
+    const { images, load, showMoreButton} = this.state;
 
     return (
       <div>
@@ -70,12 +68,7 @@ class App extends React.Component {
             onClick={this.nextPage}
           ></ImageGallery>
 
-          {this.state.images &&
-          this.state.howManyImagesFound - this.state.images.length > 12 ? (
-            <LoadMoreButton onClick={this.nextPage}></LoadMoreButton>
-          ) : (
-            ''
-        )}
+          {showMoreButton &&<LoadMoreButton onClick={this.nextPage} />}
       </div>
     );
   }
